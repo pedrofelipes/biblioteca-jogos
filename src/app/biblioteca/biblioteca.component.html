@@ -1,0 +1,97 @@
+<div class="container mt-4">
+    <h1 class="text-center mb-4">📚 Biblioteca de Jogos</h1>
+  
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">Adicionar Novo Jogo</div>
+      <div class="card-body">
+        <form (ngSubmit)="adicionarJogo()">
+          <div class="mb-3">
+            <label for="tipo" class="form-label">Tipo de Jogo</label>
+            <select [(ngModel)]="novoJogo.tipo" name="tipo" id="tipo" class="form-select">
+              <option value="tabuleiro">Jogo de Tabuleiro</option>
+              <option value="carta">Jogo de Carta</option>
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input
+              [(ngModel)]="novoJogo.titulo"
+              name="titulo"
+              id="titulo"
+              class="form-control"
+              placeholder="Ex: Xadrez"
+            />
+          </div>
+  
+          <div class="mb-3">
+            <label for="ano" class="form-label">Ano de Publicação</label>
+            <input
+              [(ngModel)]="novoJogo.anoPublicacao"
+              name="ano"
+              id="ano"
+              type="number"
+              class="form-control"
+            />
+          </div>
+  
+          <div class="mb-3">
+            <label for="fabricante" class="form-label">Fabricante</label>
+            <input
+              [(ngModel)]="novoJogo.fabricante"
+              name="fabricante"
+              id="fabricante"
+              class="form-control"
+            />
+          </div>
+  
+          <div *ngIf="novoJogo.tipo === 'tabuleiro'" class="mb-3">
+            <label for="jogadores" class="form-label">Número de Jogadores</label>
+            <input
+              [(ngModel)]="novoJogo.numeroJogadores"
+              name="jogadores"
+              id="jogadores"
+              type="number"
+              class="form-control"
+            />
+          </div>
+  
+          <div *ngIf="novoJogo.tipo === 'carta'" class="mb-3">
+            <label for="idadeMinima" class="form-label">Idade Mínima</label>
+            <input
+              [(ngModel)]="novoJogo.idadeMinima"
+              name="idadeMinima"
+              id="idadeMinima"
+              type="number"
+              class="form-control"
+            />
+          </div>
+  
+          <button type="submit" class="btn btn-success w-100">Adicionar Jogo</button>
+        </form>
+      </div>
+    </div>
+  
+    <h2 class="text-center mb-4">🎲 Jogos Cadastrados</h2>
+    <div *ngIf="jogos.length > 0; else noGames">
+      <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col" *ngFor="let jogo of jogos">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ jogo.titulo }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                {{ jogo.anoPublicacao }} - {{ jogo.fabricante }}
+              </h6>
+              <p class="card-text">{{ jogo.exibirRegras() }}</p>
+              <button class="btn btn-danger btn-sm" (click)="removerJogo(jogo.titulo)">Remover</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noGames>
+      <p class="text-center text-muted">Nenhum jogo cadastrado ainda.</p>
+    </ng-template>
+  </div>
+  
